@@ -57,5 +57,59 @@ public class UserRepoCustomImpl implements UserRepoCustom {
 		return qryStr.toString();
 	}
 
+	public List<User> findUser(String searchStr,final Pageable pageable){
+		String q = "select u from User u JOIN u.role role "+getWhere(searchStr);
+		System.out.println("Query:"+q);
+		TypedQuery<User> qry = em.createQuery(OrderBy(q,pageable),User.class);
+		Long offset = pageable.getOffset();
+		qry.setFirstResult(offset.intValue());
+		qry.setMaxResults(pageable.getPageSize());
+		return qry.getResultList();
+	}
 
+	private String getWhere(String str) {
+		String[] conditions = str.split(",");
+		System.out.println(conditions.length);
+		String[] k = new String[2];
+		StringBuilder builder = new StringBuilder("where 1=1"); 
+		for (String condition : conditions) {
+            System.out.println("condition:"+condition);
+            if(condition.contains(":")) {
+            	//equal
+            	k = condition.split(":");
+            	if(k[0].equalsIgnoreCase("role"))
+            		builder.append(" and lower(role.name)"+" = '"+k[1].toLowerCase()+"'");
+            	else
+            		builder.append(" and lower(u."+k[0]+") = '"+k[1].toLowerCase()+"'");
+            }
+            else if(condition.contains("!")) {
+            	//negation
+            	k = condition.split("!");
+            	if(k[0].equalsIgnoreCase("role"))
+            		builder.append(" and lower(role.name)"+" != "+k[1].toLowerCase());
+            	else
+            		builder.append(" and lower(u."+k[0]+") != "+k[1].toLowerCase());
+            }
+            else if(condition.contains(">")) {
+            	//greater then
+            	k = condition.split(">");
+            	builder.append(" and u."+k[0]+" > "+k[1]);
+            }
+            else if(condition.contains("<")) {
+            	//less then
+            	k = condition.split("<");
+            	builder.append(" and u."+k[0]+" < "+k[1]);
+            }
+            else if(condition.contains("~")) {
+            	//like
+            	k = condition.split("~");
+            	if(k[0].equalsIgnoreCase("role"))
+            		builder.append(" and lower(role.name)"+" like '%"+k[1].toLowerCase()+"%'");
+            	else
+            		builder.append(" and lower(u."+k[0]+") like '%"+k[1].toLowerCase()+"%'");
+            }
+        }
+		System.out.println(builder.toString());
+		return builder.toString();
+	}
 }

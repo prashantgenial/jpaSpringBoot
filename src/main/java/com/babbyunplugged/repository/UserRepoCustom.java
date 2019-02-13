@@ -15,4 +15,5 @@ public interface UserRepoCustom {
 	List<User> findUser(String email);
 	
 	List<User> search(@Param("roleName")String roleName,final Pageable pageable);
+	List<User> findUser(String searchStr,final Pageable pageable);
 }

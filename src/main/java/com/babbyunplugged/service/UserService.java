@@ -1,8 +1,10 @@
 package com.babbyunplugged.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,8 @@ public class UserService {
 		return userRepo.findAll();
 	}*/
 	
+	public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
+	
 	public List<User> search(Map<String,String> params,final Pageable pageable){
 		/*StringBuilder wh = new StringBuilder("where 1=1");
 		if(!params.isEmpty()) {
@@ -28,6 +32,11 @@ public class UserService {
 		}*/
 			
 		return userRepo.search("Admin",pageable);
+	}
+	
+	public List<User> findUser(String searchStr,final Pageable pageable) {
+		System.out.println("Search:"+searchStr);
+		return userRepo.findUser(searchStr,pageable);		
 	}
 	
 	public Optional<User> findById(Long id) {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.babbyunplugged.entity.User;
@@ -38,10 +39,16 @@ public class UserController {
 		LOGGER.info(""+params);
 		//LOGGER.info(""+sort);
 		LOGGER.info("page:"+pageable);
-		List<User> users = userService.search(params,pageable);
-		return new PageImpl<>(users,pageable,users.size());
+		List<User> users = userService.search(params,pageable); //pageable contains page and sorting information both
+		return new PageImpl<>(users,pageable,users.size());	//Converting List to Page
 	}
 
+	@RequestMapping(method=RequestMethod.GET,value="/user/search")
+	public List<User> find(@RequestParam("search") String str,final Pageable pageable) {
+		LOGGER.info("page:"+pageable);
+		return userService.findUser(str,pageable);
+	}
+	
 	@GetMapping("/user/{id}")
 	public Optional<User> findById(@PathVariable("id") Long id) {
 		return userService.findById(id);
