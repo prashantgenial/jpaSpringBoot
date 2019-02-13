@@ -14,7 +14,8 @@ add
 @ManyToMany(mappedBy="courses")
 
 TODO:
-paging
+Sorting [done]
+paging[done]
 search by email
 search by name
 search by rolename
@@ -22,3 +23,6 @@ search by rolename
 ##URL
 localhost:8080/search
 localhost:8080/search?sort=name,desc
+localhost:8080/search?sort=name,asc&page=0&size=1
+PagedListHolder
+PageImpl

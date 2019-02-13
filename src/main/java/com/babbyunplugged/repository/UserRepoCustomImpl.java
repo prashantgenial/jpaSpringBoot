@@ -7,11 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.babbyunplugged.entity.User;
 
@@ -35,19 +34,28 @@ public class UserRepoCustomImpl implements UserRepoCustom {
 
 
 	@Override
-	public List<User> findUserByRoleName(String roleName, Sort sort) {
+	public List<User> findUserByRoleName(String roleName,final Pageable pageable) {
 		String q = "select u from User u JOIN u.role role where role.name =:roleName";
-		TypedQuery<User> qry = em.createQuery(OrderBy(q,sort),User.class);
+		TypedQuery<User> qry = em.createQuery(OrderBy(q,pageable),User.class);
 		qry.setParameter("roleName", roleName);
+		Long offset = pageable.getOffset();
+		qry.setFirstResult(offset.intValue());
+		qry.setMaxResults(pageable.getPageSize());
 		return qry.getResultList();
 	}
 	
-	private String OrderBy(String qry,Sort sort) {
-		Iterator<Order> orderIterator = sort.iterator();
-		Order order = orderIterator.next();
+	private String OrderBy(String qry,final Pageable pageable) {
 		StringBuilder qryStr = new StringBuilder(qry);
-		qryStr.append(" Order By ").append("u."+order.getProperty()).append(" ")
-        .append(order.getDirection().name());
+		if(pageable.getSort().isEmpty()) {
+			qryStr.append(" Order By ").append("u.name").append(" ")
+	        .append("asc");
+		}
+		else {
+			Iterator<Order> orderIterator = pageable.getSort().iterator();
+			Order order = orderIterator.next();
+			qryStr.append(" Order By ").append("u."+order.getProperty()).append(" ")
+	        .append(order.getDirection().name());
+		}
 		return qryStr.toString();
 	}
 

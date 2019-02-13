@@ -7,12 +7,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,11 +34,13 @@ public class UserController {
 	
 
 	@RequestMapping(method=RequestMethod.POST,value="/search",produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<User> search(@RequestBody(required=false) Map<String,String> params,Sort sort) {
+	public Page<User> search(@RequestBody(required=false) Map<String,String> params,final Pageable pageable) {
 		LOGGER.info("Inside Search.......................");
 		LOGGER.info(""+params);
-		LOGGER.info(""+sort);
-		return userService.search(sort);
+		//LOGGER.info(""+sort);
+		LOGGER.info("page:"+pageable);
+		List<User> users = userService.search(params,pageable);
+		return new PageImpl<>(users,pageable,users.size());
 	}
 
 	@GetMapping("/user/{id}")
