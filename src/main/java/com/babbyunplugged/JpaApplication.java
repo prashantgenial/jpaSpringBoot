@@ -16,9 +16,9 @@ import com.babbyunplugged.entity.User;
 import com.babbyunplugged.repository.UserRepo;
 
 @SpringBootApplication
-public class JpaOneToOneApplication implements CommandLineRunner {
+public class JpaApplication implements CommandLineRunner {
 
-	private Logger logger =LoggerFactory.getLogger(JpaOneToOneApplication.class);
+	private Logger logger =LoggerFactory.getLogger(JpaApplication.class);
 	
 	@PersistenceContext
 	EntityManager em;
@@ -28,7 +28,7 @@ public class JpaOneToOneApplication implements CommandLineRunner {
 	UserRepo userRepo;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(JpaOneToOneApplication.class, args);
+		SpringApplication.run(JpaApplication.class, args);
 	}
 
 	@Override

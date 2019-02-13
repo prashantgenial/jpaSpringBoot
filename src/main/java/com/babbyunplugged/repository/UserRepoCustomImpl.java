@@ -8,9 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-
 
 import com.babbyunplugged.entity.User;
 
@@ -34,7 +32,7 @@ public class UserRepoCustomImpl implements UserRepoCustom {
 
 
 	@Override
-	public List<User> findUserByRoleName(String roleName,final Pageable pageable) {
+	public List<User> search(String roleName,final Pageable pageable) {
 		String q = "select u from User u JOIN u.role role where role.name =:roleName";
 		TypedQuery<User> qry = em.createQuery(OrderBy(q,pageable),User.class);
 		qry.setParameter("roleName", roleName);

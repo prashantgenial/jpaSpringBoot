@@ -14,5 +14,5 @@ import com.babbyunplugged.entity.User;
 public interface UserRepoCustom {
 	List<User> findUser(String email);
 	
-	List<User> findUserByRoleName(@Param("roleName")String roleName,final Pageable pageable);
+	List<User> search(@Param("roleName")String roleName,final Pageable pageable);
 }

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.babbyunplugged.entity.User;
@@ -28,7 +27,7 @@ public class UserService {
 			wh.append(" and ")
 		}*/
 			
-		return userRepo.findUserByRoleName("Admin",pageable);
+		return userRepo.search("Admin",pageable);
 	}
 	
 	public Optional<User> findById(Long id) {
