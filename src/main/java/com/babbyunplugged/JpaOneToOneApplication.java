@@ -1,7 +1,5 @@
 package com.babbyunplugged;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -37,6 +35,8 @@ public class JpaOneToOneApplication implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 		
+		//logger.info("Custom repo result:",userRepo.findUser("amit.gupta@orange.com"));
+		logger.info("Users by role:",userRepo.findUserByRoleName("Admin"));	//get data based on Join
 	/*	Role role = new Role("Reporter");
 		em.persist(role);
 		

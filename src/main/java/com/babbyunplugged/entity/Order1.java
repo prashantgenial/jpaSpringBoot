@@ -1,27 +1,25 @@
 package com.babbyunplugged.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class User {
+public class Order1 {
 
 	@Id
 	@GeneratedValue
 	private Long id ;
-	private String name ;
-	private String email;
+	private String description ;
+	
 	
 	@CreationTimestamp
 	private LocalDateTime createdDate ;
@@ -29,29 +27,28 @@ public class User {
 	@UpdateTimestamp
 	private LocalDateTime lastUpdatedDate ;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="roleid")
-	@JsonIgnore
-	private Role role;
+	@OneToMany(mappedBy="order")
+	private List<Note> notes = new ArrayList<>();
 	
-	protected User() {}
+	public Order1() {}
 
-	public User(String name,String email) {
+	public Order1(String description) {
 		super();
-		this.name = name;		
-		this.email = email ;
+		this.description = description;
 	}
 
+	public List<Note> getNotes() {
+		return notes;
+	}
 	
+	public void addNotes(Note note) {
+		this.notes.add(note);
+	}
 	
-	public String getEmail() {
-		return email;
+	public void removeNotes(Note note) {
+		this.notes.remove(note);
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -60,12 +57,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public LocalDateTime getCreatedDate() {
@@ -83,23 +80,13 @@ public class User {
 	public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
-	
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", createdDate=" + createdDate + ", lastUpdatedDate="
-				+ lastUpdatedDate + "]";
+		return "Order [id=" + id + ", description=" + description + ", createdDate=" + createdDate
+				+ ", lastUpdatedDate=" + lastUpdatedDate + "]";
 	}
+	
+	
 
-	
-
-	
-	
 }
