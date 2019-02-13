@@ -12,3 +12,13 @@ joinColumns=@JoinColumn(),inverseJoinColumns=@JoinColumn()
 
 add
 @ManyToMany(mappedBy="courses")
+
+TODO:
+paging
+search by email
+search by name
+search by rolename
+
+##URL
+localhost:8080/search
+localhost:8080/search?sort=name,desc

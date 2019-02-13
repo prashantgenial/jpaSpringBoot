@@ -36,7 +36,7 @@ public class UserController {
 		LOGGER.info("Inside Search.......................");
 		LOGGER.info(""+params);
 		LOGGER.info(""+sort);
-		return userService.search();
+		return userService.search(sort);
 	}
 
 	@GetMapping("/user/{id}")

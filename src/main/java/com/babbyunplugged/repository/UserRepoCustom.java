@@ -2,6 +2,7 @@ package com.babbyunplugged.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,5 +14,5 @@ import com.babbyunplugged.entity.User;
 public interface UserRepoCustom {
 	List<User> findUser(String email);
 	
-	List<User> findUserByRoleName(@Param("roleName")String roleName);
+	List<User> findUserByRoleName(@Param("roleName")String roleName,Sort sort);
 }

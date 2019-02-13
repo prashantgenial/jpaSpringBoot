@@ -36,7 +36,7 @@ public class JpaOneToOneApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		//logger.info("Custom repo result:",userRepo.findUser("amit.gupta@orange.com"));
-		logger.info("Users by role:",userRepo.findUserByRoleName("Admin"));	//get data based on Join
+		//logger.info("Users by role:",userRepo.findUserByRoleName("Admin"));	//get data based on Join
 	/*	Role role = new Role("Reporter");
 		em.persist(role);
 		
@@ -73,10 +73,10 @@ public class JpaOneToOneApplication implements CommandLineRunner {
         user0_.id=?
 		 */
 		//Don't use this JPQL as it will retrieve all the properties which we don't need
-		TypedQuery<User> q = em.createQuery("Select u From User u where u.id=?1",User.class);
+		/*TypedQuery<User> q = em.createQuery("Select u From User u where u.id=?1",User.class);
 		q.setParameter(1, 10006L);
 		User u = q.getSingleResult();
-		logger.info("result -> {}",u.getName());
+		logger.info("result -> {}",u.getName());*/
 		
 		
 		/*
