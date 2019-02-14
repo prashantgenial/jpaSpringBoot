@@ -4,14 +4,14 @@ Make sure all @OneToOne or @ManyToOne properties marked as LAZY fetch
 	
 this will make sure that other table data did not fetch by default.
 
-create User Section
-@ManyTOMany
-@JoinTable(
-joinColumns=@JoinColumn(),inverseJoinColumns=@JoinColumn()
-)
-
-add
-@ManyToMany(mappedBy="courses")
+	create User Section
+	@ManyTOMany
+	@JoinTable(
+	joinColumns=@JoinColumn(),inverseJoinColumns=@JoinColumn()
+	)
+	
+	add
+	@ManyToMany(mappedBy="courses")
 
 TODO:  
 Sorting [done]  
@@ -41,5 +41,17 @@ Like: represented by tilde (~)
 ##Complex – need more than one character to be represented  
 Starts with: represented by (=prefix*)  
 Ends with: represented by (=*suffix)  
-Contains: represented by (=*substring*)  
+Contains: represented by (=*substring*)    
 
+#Oracle Connectivity  
+* Add Oracle jar file   
+	&lt;dependency&gt;   
+        &lt;groupId&gt;com.oracle&lt;/groupId&gt;  
+        &lt;artifactId&gt;ojdbc7&lt;/artifactId&gt;  
+        &lt;version&gt;12.1.0&lt;/version&gt;  
+    &lt;/dependency&gt;    
+    
+	spring.datasource.url=jdbc:oracle:thin:@localhost:1521:orcl  
+	spring.datasource.username =username  
+	spring.datasource.password =pass  
+	spring.datasource.driver-class-name=oracle.jdbc.OracleDriver  
