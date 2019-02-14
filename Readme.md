@@ -28,8 +28,7 @@ PagedListHolder
 PageImpl  
 
 https://www.baeldung.com/rest-api-query-search-language-more-operations  
-http://localhost:8080/users?search=firstName:jo*,age<25  
-localhost:8080/user/search?search=role:Admin,name~pras  
+http://localhost:8080/user/search?search=role:Admin,name~pras  
 We have two sets of operations:  
 
 ##Simple – can be represented by one character  
