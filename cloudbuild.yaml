@@ -1,6 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/jpaonetoone', '.' ]
-  
-images:
-- 'gcr.io/$PROJECT_ID/jpaonetoone'
+- name: maven:3.6.0-jdk-11-slim
+  entrypoint: 'mvn'
+  args: ['clean', 'install', '-DskipTests']
